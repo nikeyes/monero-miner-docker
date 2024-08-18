@@ -3,10 +3,13 @@ version: '3.8'
 services:
   monero-miner:
     image: monero-miner
-    build: .
+    build: xmrig/.
     environment:
       WALLET: 49NzKLonRimMhGnEiLNeZMTRFhNaVpPHoDrBUKiUsiDDXqXa6rbx7kagHQUNvEF8CfGjMD8KmKjBb7L6ZaEcRV9p5EZb32f
       POOL: pool.supportxmr.com:3333
       PASS: LocalDocker
       DONATE_LEVEL: 1
     privileged: true
+    restart: unless-stopped
+    command: sh -c "./xmrig --url=${POOL} --donate-level=${DONATE_LEVEL} --user=${WALLET} --pass=${PASS} --cpu-priority=2 -k --algo=rx/0 --coin=monero"
+      
