@@ -1,4 +1,4 @@
-    FROM alpine:3.20.2 AS builder
+FROM alpine:3.20.2 AS builder
 
 ARG XMRIG_VERSION='v6.22.0'
 WORKDIR /miner
@@ -37,9 +37,9 @@ RUN apk update && apk add --no-cache \
 WORKDIR /xmr
 COPY --from=builder /miner/xmrig/build/xmrig /xmr
 
-ENV WALLET=49NzKLonRimMhGnEiLNeZMTRFhNaVpPHoDrBUKiUsiDDXqXa6rbx7kagHQUNvEF8CfGjMD8KmKjBb7L6ZaEcRV9p5EZb32f
-ENV POOL=pool.supportxmr.com:3333
-ENV PASS=LocalDocker
-ENV DONATE_LEVEL=1
+ENV WALLET=DEFAULT_WALLET
+ENV POOL=DEFAULT_POOL
+ENV PASS=DEFAULT_PASS
+ENV DONATE_LEVEL=DEFAULT_DONATE_LEVEL
 
 CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=$DONATE_LEVEL --user=$WALLET --pass=$PASS -k --algo=rx/0 --coin=monero"]
