@@ -34,14 +34,12 @@ RUN apk update && apk add --no-cache \
     libressl \
     hwloc-dev
 
-WORKDIR /xmrig
+WORKDIR /xmr
 COPY --from=builder /miner/xmrig/build/xmrig /xmr
 
-ENV WALLET=YOUR-WALLET-HERE
-ENV POOL=YOUR-POOL-HERE
-ENV PASS=YOUR-PASS-OR-LABEL-HERE
-ENV DONATE_LEVEL=YOUR-DONATE-LEVEL-HERE
+ENV WALLET=DEFAULT_WALLET
+ENV POOL=DEFAULT_POOL
+ENV PASS=DEFAULT_PASS
+ENV DONATE_LEVEL=DEFAULT_DONATE_LEVEL
 
-#CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=$DONATE_LEVEL --user=$WALLET --pass=$PASS -k --algo=rx/0 --coin=monero"]
-WORKDIR /
-ENTRYPOINT ["/xmrig"]
+CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=$DONATE_LEVEL --user=$WALLET --pass=$PASS -k --algo=rx/0 --coin=monero"]
