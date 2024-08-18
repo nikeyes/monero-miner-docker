@@ -1,7 +1,7 @@
 # monero-miner-docker
 Based on https://github.com/giansalex/monero-miner-docker
 
-## Monero Pools
+## Monero Pools
 - [https://miningpoolstats.stream/monero](https://miningpoolstats.stream/monero)
 - For testing, I use:
      - [https://xmr.nanopool.org/](https://xmr.nanopool.org/) - xmr-eu1.nanopool.org:10300
@@ -12,6 +12,6 @@ Based on https://github.com/giansalex/monero-miner-docker
 docker-compose up --build
 ```
 
-## xmrig 
+## xmrig 
 - Alpine reference: [https://xmrig.com/docs/miner/build/alpine](https://xmrig.com/docs/miner/build/alpine)
 - Doc: [https://xmrig.com/docs/miner](https://xmrig.com/docs/miner)
