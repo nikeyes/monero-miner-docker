@@ -35,6 +35,7 @@ services:
       --loglevel 3
       --local-api
       --data-api /home/p2pool/.p2pool
+      --mini
 
   monero:
     image: monero:latest
