@@ -21,7 +21,7 @@ Here's the comparison table of the different ways of mining. While pool mining i
 
 ## Monero mining with pool
 
-### How to run and stop
+### How to run and stop with pool
 ```bash
 docker compose -f docker-compose-with-pool.yml  up --build
 
