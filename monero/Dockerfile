@@ -1,56 +1,55 @@
-# Multistage docker build, requires docker 17.05
+FROM alpine:3.20.2 AS builder
 
-# builder stage
-FROM ubuntu:20.04 as builder
-ARG MONERO_GIT_TAG="latest"
+ARG MONERO_GIT_TAG="PUT_A_TAG_HERE"
 
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
-        automake \
-        autotools-dev \
-        bsdmainutils \
-        build-essential \
-        ca-certificates \
-        ccache \
-        cmake \
-        curl \
-        git \
-        libtool \
-        pkg-config \
-        gperf
-
+RUN apk add --no-cache \
+      autoconf \
+      automake \
+      boost-dev \
+      ccache \
+      cmake \
+      curl \
+      g++ \
+      gettext \
+      git \
+      gtest-dev \
+      libsodium-dev \
+      libtool \
+      libunwind-dev \
+      make \
+      openpgm-dev \
+      openssl-dev \
+      patch \
+      perl \
+      pkgconf \
+      unbound-dev \
+      zeromq-dev \
+      linux-headers
 
 WORKDIR /src
-RUN git clone --recursive https://github.com/monero-project/monero && \
-    cd monero && \
-    if [ "x$MONERO_GIT_TAG" = "xlatest" ]; then MONERO_GIT_TAG=$(git describe --tags $(git rev-list --tags --max-count=1)); fi && \
-    git checkout $MONERO_GIT_TAG && \
-    git submodule sync && git submodule update --init --force --recursive && \
-    make -j$(nproc) depends target=$(contrib/depends/config.guess)
+
+RUN git clone --branch ${MONERO_GIT_TAG} --depth 1 https://github.com/monero-project/monero  && \
+      cd monero && \
+      git submodule update --init --recursive && \
+      make -j$(nproc) depends target=$(contrib/depends/config.guess)
 
 # ---
 
-# runtime stage
-FROM ubuntu:20.04
+FROM alpine:3.20.2 
 
-COPY --from=0 /src/monero/build/*/release/bin /usr/local/bin/
-
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
-      ca-certificates \
-      netcat \
-    && \
-    apt-get clean && \
-    rm -rf /var/lib/apt
-
-RUN groupadd -r monero -g 1000 && \
-    adduser --uid 1000 --gid 1000 --system --disabled-password monero && \
-	mkdir -p /home/monero/.bitmonero && \
-	chown -R monero:monero /home/monero/.bitmonero
-
+RUN addgroup -g 1000 -S monero && \
+      adduser -u 1000 -G monero -S -D -H monero && \
+      mkdir -p /home/monero/.bitmonero && \
+      chown -R monero:monero /home/monero/.bitmonero
+  
 USER monero
+
+COPY --from=builder --chown=monero:monero /src/monero/build/*/release/bin /usr/local/bin/
+
+RUN apk add --no-cache \
+      ca-certificates \
+      netcat-openbsd
+
 WORKDIR /home/monero
 
 EXPOSE 18080 18081 18083

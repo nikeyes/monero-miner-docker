@@ -3,7 +3,10 @@ version: '3.8'
 services:
   monero-miner:
     image: monero-miner
-    build: xmrig/.
+    build: 
+      context: xmrig/.
+      args:
+        - XMRIG_GIT_TAG=v6.22.0
     environment:
       WALLET: 49NzKLonRimMhGnEiLNeZMTRFhNaVpPHoDrBUKiUsiDDXqXa6rbx7kagHQUNvEF8CfGjMD8KmKjBb7L6ZaEcRV9p5EZb32f
       POOL: pool.supportxmr.com:3333

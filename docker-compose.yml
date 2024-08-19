@@ -13,7 +13,10 @@ volumes:
 services:
   p2pool:
     image: p2pool:latest
-    build: p2pool/.
+    build: 
+      context: p2pool/.
+      args:
+        - P2POOL_GIT_TAG=v4.1
     env_file:
       - .env
     container_name: p2pool-p2pool
@@ -57,7 +60,7 @@ services:
     build:
       context: monero
       args:
-        - MONERO_GIT_TAG=latest
+        - MONERO_GIT_TAG=v0.18.3.4
     container_name: p2pool-monero
     networks:
       - p2pool
@@ -89,7 +92,10 @@ services:
 
   xmrig:
     image: xmrig:latest
-    build: xmrig-p2pool/.
+    build: 
+      context: xmrig-p2pool/.
+      args:
+        - XMRIG_GIT_TAG=v6.22.0
     container_name: p2pool-xmrig
     networks:
       - p2pool

@@ -1,6 +1,6 @@
 FROM alpine:3.20.2 AS builder
 
-ARG P2POOL_VERSION='v4.1'
+ARG P2POOL_GIT_TAG='PUT_A_TAG_HERE'
 
 RUN apk add --no-cache \
         git \
@@ -14,7 +14,7 @@ RUN apk add --no-cache \
 
 RUN git clone https://github.com/SChernykh/p2pool /usr/src/p2pool && \
     cd /usr/src/p2pool && \
-    git checkout ${P2POOL_VERSION}
+    git checkout ${P2POOL_GIT_TAG}
 
 WORKDIR /usr/src/p2pool
 RUN git submodule update --init --recursive && \

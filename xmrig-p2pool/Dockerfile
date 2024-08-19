@@ -1,6 +1,6 @@
 FROM alpine:3.20.2 AS builder
 
-ARG XMRIG_VERSION='v6.22.0'
+ARG XMRIG_GIT_TAG='PUT_A_TAG_HERE'
 
 RUN apk add --no-cache \ 
     git \ 
@@ -14,7 +14,7 @@ RUN apk add --no-cache \
     hwloc-dev
 
 WORKDIR /usr/src
-RUN git clone --branch ${XMRIG_VERSION} --depth 1 https://github.com/xmrig/xmrig.git && \
+RUN git clone --branch ${XMRIG_GIT_TAG} --depth 1 https://github.com/xmrig/xmrig.git && \
     mkdir xmrig/build && \
     cd xmrig/build && \
     cmake .. && \
