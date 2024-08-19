@@ -19,23 +19,23 @@ Here's the comparison table of the different ways of mining. While pool mining i
 - [https://p2pool.observer/](https://p2pool.observer/)
 - [https://mini.p2pool.observer/](https://mini.p2pool.observer/)
 
-## Monero mining with pool
+## Monero mining with public pools
 
-### How to run and stop with pool
-- IMPORTANT! You need between 70-90GB of free space and 7-10 hours to synchronise the entire monero blockchain.
+### How to run and stop with public pool
 ```bash
 docker compose -f docker-compose-with-pool.yml  up --build
 
 docker compose -f docker-compose-with-pool.yml  down
 ```
 
-### Monero Pools
+### Monero public pools
 - [https://miningpoolstats.stream/monero](https://miningpoolstats.stream/monero)
 - For testing, I use:
      - [https://xmr.nanopool.org/](https://xmr.nanopool.org/) - xmr-eu1.nanopool.org:10300
      - [https://supportxmr.com/](https://supportxmr.com/) - pool.supportxmr.com:3333
 
 ## Monero with p2pool protocol
+- **IMPORTANT! You need between 70-90GB of free space and 7-10 hours to synchronise the entire monero blockchain.**
 
 ### How to run p2pool
 ```bash
@@ -46,6 +46,9 @@ docker compose up --build
 ```bash
 docker compose down
 ```
+
+### How to see p2pool statistics
+- [http://localhost:3380/](http://localhost:3380/)
 
 ### Update containers
 - All containers

@@ -36,6 +36,21 @@ services:
       --local-api
       --data-api /home/p2pool/.p2pool
       --mini
+      
+  statistics:
+    image: statistics:latest
+    build:
+      context: statistics
+    container_name: p2pool-statistics
+    networks:
+      - p2pool
+    ports:
+      - 3380:80/tcp
+    volumes:
+      - p2pool:/data:ro
+    depends_on:
+      - p2pool
+    restart: unless-stopped
 
   monero:
     image: monero:latest
