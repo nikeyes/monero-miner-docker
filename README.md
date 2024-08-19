@@ -22,6 +22,7 @@ Here's the comparison table of the different ways of mining. While pool mining i
 ## Monero mining with pool
 
 ### How to run and stop with pool
+- IMPORTANT! You need between 70-90GB of free space and 7-10 hours to synchronise the entire monero blockchain.
 ```bash
 docker compose -f docker-compose-with-pool.yml  up --build
 
