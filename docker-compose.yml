@@ -45,7 +45,7 @@ services:
     networks:
       - p2pool
     ports:
-      - 3380:80/tcp
+      - 3380:3380/tcp
     volumes:
       - p2pool:/data:ro
     depends_on:
@@ -107,3 +107,4 @@ services:
       -u p2pool
       --cpu-max-threads-hint=100
       --cpu-priority=2
+      --donate-level=1

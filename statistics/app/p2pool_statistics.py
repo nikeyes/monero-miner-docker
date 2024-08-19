@@ -60,7 +60,7 @@ def render():
             network_stats = json.loads(reader.read())
         with open("/data/local/stratum", "r") as reader:
             local_stats = json.loads(reader.read())
-        workers = local_stats["workers"][:30] # limit workers output list
+        workers = local_stats["workers"][:30]  # limit workers output list
         workers_concat = []
         for w in workers:
             w_list = w.split(",")
@@ -86,4 +86,4 @@ def render():
 ##
 # main()
 if __name__ == "__main__":
-    app.run(debug=False, host="0.0.0.0", port=80)
+    app.run(debug=False, host="0.0.0.0", port=3380)
