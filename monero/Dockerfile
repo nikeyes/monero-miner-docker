@@ -21,10 +21,12 @@ RUN set -e && \
 
 WORKDIR /src
 
-RUN git clone --branch ${MONERO_GIT_TAG} --depth 1 https://github.com/monero-project/monero  && \
-      cd monero && \
-      git submodule update --init --recursive && \
-      make -j$(nproc) depends target=$(contrib/depends/config.guess)
+RUN git clone --branch ${MONERO_GIT_TAG} --depth 1 https://github.com/monero-project/monero
+    
+WORKDIR /src/monero
+
+RUN git submodule update --init --recursive && \
+    make "-j$(nproc)" depends target="$(contrib/depends/config.guess)"
 
 # ---
 

@@ -12,16 +12,19 @@ RUN apk add --no-cache \
         curl-dev \
         linux-headers
 
-RUN git clone https://github.com/SChernykh/p2pool /usr/src/p2pool && \
-    cd /usr/src/p2pool && \
-    git checkout ${P2POOL_GIT_TAG}
+WORKDIR /usr/src
+
+RUN git clone https://github.com/SChernykh/p2pool
 
 WORKDIR /usr/src/p2pool
-RUN git submodule update --init --recursive && \
-    mkdir build && \
-    cd build && \
-    cmake .. && \
-    make -j$(nproc)
+
+RUN git checkout ${P2POOL_GIT_TAG} && \
+    git submodule update --init --recursive
+
+WORKDIR /usr/src/p2pool/build
+
+RUN cmake .. && \
+    make "-j$(nproc)"
 
 # ---
 
