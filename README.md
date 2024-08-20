@@ -1,6 +1,6 @@
 # Monero miner docker with pool or with p2pool protocol
 
-[![Lint Dockerfile](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml/badge.svg?branch=main)](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml)
+[![Lint Dockerfile](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml/badge.svg)](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 - Based on:
