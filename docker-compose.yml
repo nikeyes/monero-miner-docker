@@ -5,7 +5,7 @@ networks:
     driver: bridge
 
 volumes:
-  p2pool: 
+  p2pool:
     name: p2pool
   monero:
     name: monero
@@ -13,7 +13,7 @@ volumes:
 services:
   p2pool:
     image: p2pool:latest
-    build: 
+    build:
       context: p2pool/.
       args:
         - P2POOL_GIT_TAG=v4.1
@@ -37,7 +37,7 @@ services:
       --local-api
       --data-api /home/p2pool/.p2pool
       --mini
-      
+
   statistics:
     image: statistics:latest
     build:
@@ -90,7 +90,7 @@ services:
 
   xmrig:
     image: xmrig:latest
-    build: 
+    build:
       context: xmrig-p2pool/.
       args:
         - XMRIG_GIT_TAG=v6.22.0
