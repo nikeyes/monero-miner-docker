@@ -12,4 +12,7 @@ jobs:
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@master
         with:
-          dockerfile: "p2pool/Dockerfile"
+          dockerfile: "Dockerfile"
+          recursive: true
+          verbose: true
+          failure-threshold: "error"
