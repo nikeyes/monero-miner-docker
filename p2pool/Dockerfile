@@ -1,21 +1,21 @@
-FROM ubuntu:20.04
+FROM alpine:3.20.2 AS builder
 
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
+ARG P2POOL_GIT_TAG='PUT_A_TAG_HERE'
+
+RUN apk add --no-cache \
         git \
-        build-essential \
-        ca-certificates \
         cmake \
-        libuv1-dev \
-        libzmq3-dev \
-        libsodium-dev \
-        libpgm-dev \
-        libnorm-dev \
-        libgss-dev \
-        libcurl4-openssl-dev
+        make \
+        libuv-dev \
+        zeromq-dev \
+        g++ \
+        curl-dev \
+        linux-headers
 
-RUN git clone https://github.com/SChernykh/p2pool /usr/src/p2pool
+RUN git clone https://github.com/SChernykh/p2pool /usr/src/p2pool && \
+    cd /usr/src/p2pool && \
+    git checkout ${P2POOL_GIT_TAG}
+
 WORKDIR /usr/src/p2pool
 RUN git submodule update --init --recursive && \
     mkdir build && \
@@ -25,27 +25,22 @@ RUN git submodule update --init --recursive && \
 
 # ---
 
-FROM ubuntu:20.04
-COPY --from=0 /usr/src/p2pool/build/p2pool /
+FROM alpine:3.20.2
+COPY --from=builder /usr/src/p2pool/build/p2pool /
 
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
-    libzmq5 \
-    libuv1 \
-    libcurl4 \
-      && \
-    apt-get clean
+RUN apk add --no-cache \
+    libcurl \
+    libuv \ 
+    libzmq
 
-RUN groupadd -r p2pool -g 1000 && \
-    useradd -u 1000 -r -g p2pool -s /sbin/nologin -c "p2pool user" p2pool
+RUN addgroup -S p2pool -g 1000 && \
+    adduser -S -u 1000 -G p2pool -s /sbin/nologin -g "p2pool user" p2pool 
+    
 RUN mkdir -p /home/p2pool/.p2pool && \
     chown p2pool.p2pool /home/p2pool /home/p2pool/.p2pool
 USER p2pool
 
-EXPOSE 3333
-EXPOSE 37889
-EXPOSE 37888
+EXPOSE 3333 37889 37888
 
 VOLUME /home/p2pool/.p2pool
 

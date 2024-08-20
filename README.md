@@ -23,9 +23,9 @@ Here's the comparison table of the different ways of mining. While pool mining i
 
 ### How to run and stop with public pool
 ```bash
-docker compose -f docker-compose-with-pool.yml  up --build
+docker compose -f docker-compose-with-public-pool.yml  up --build
 
-docker compose -f docker-compose-with-pool.yml  down
+docker compose -f docker-compose-with-public-pool.yml  down
 ```
 
 ### Monero public pools

@@ -1,9 +1,9 @@
 FROM alpine:3.20.2 AS builder
 
-ARG XMRIG_VERSION='v6.22.0'
+ARG XMRIG_GIT_TAG='PUT_A_TAG_HERE'
 WORKDIR /miner
 
-RUN apk update && apk add --no-cache \ 
+RUN apk add --no-cache \ 
     git \ 
     make \ 
     cmake \ 
@@ -14,16 +14,12 @@ RUN apk update && apk add --no-cache \
     openssl-dev \ 
     hwloc-dev
     
-RUN git clone https://github.com/xmrig/xmrig && \
-    cd xmrig && \
-    git checkout ${XMRIG_VERSION}
 
-RUN mkdir xmrig/build
-
-RUN cd xmrig/build && \
+RUN git clone --branch ${XMRIG_GIT_TAG} --depth 1 https://github.com/xmrig/xmrig.git && \
+    mkdir xmrig/build && \
+    cd xmrig/build && \
     cmake .. && \
     make -j$(nproc)
-
 
 FROM alpine:3.20.2
 LABEL owner="Jorge Castro"
@@ -34,8 +30,12 @@ RUN apk update && apk add --no-cache \
     libressl \
     hwloc-dev
 
+RUN addgroup -S xmrig -g 1000 && \
+    adduser -S -u 1000 -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
+USER xmrig
+
 WORKDIR /xmr
-COPY --from=builder /miner/xmrig/build/xmrig /xmr
+COPY --from=builder --chown=xmrig:xmrig /miner/xmrig/build/xmrig /xmr
 
 ENV WALLET=DEFAULT_WALLET
 ENV POOL=DEFAULT_POOL

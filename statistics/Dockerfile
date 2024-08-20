@@ -1,8 +1,30 @@
-FROM python:slim
+FROM python:3.12.5-alpine3.20
 
-COPY app /app
+LABEL owner="Jorge Castro" maintainer="nikey_es@yahoo.es"
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    PIP_NO_CACHE_DIR=on \
+    PIP_DISABLE_PIP_VERSION_CHECK=on
+
+RUN addgroup -S appuser -g 1000 && \
+    adduser -S -u 1000 -G appuser -s /sbin/nologin -g "appuser user" appuser  
+USER appuser
 
 WORKDIR /app
-RUN pip install -r requirements.txt
 
+COPY --chown=appuser:appuser app/requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY --chown=appuser:appuser app .
+
+# Redundat, but it's a good practice to avoid permission issues if the files changed at the copy moment
+RUN chown -R appuser:appuser /app
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+    CMD curl -f http://localhost:3380/ || exit 1
+
+EXPOSE 3380
+
+ENTRYPOINT ["python"]
 CMD ["/app/p2pool_statistics.py"]

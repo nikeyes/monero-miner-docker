@@ -1,18 +1,20 @@
-FROM ubuntu:20.04
+FROM alpine:3.20.2 AS builder
 
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
-        git \
-        build-essential \
-        ca-certificates \
-        cmake \
-        libuv1-dev \
-        libssl-dev \
-        libhwloc-dev
+ARG XMRIG_GIT_TAG='PUT_A_TAG_HERE'
+
+RUN apk add --no-cache \ 
+    git \ 
+    make \ 
+    cmake \ 
+    libstdc++ \ 
+    gcc \ 
+    g++ \ 
+    libuv-dev \ 
+    openssl-dev \ 
+    hwloc-dev
 
 WORKDIR /usr/src
-RUN git clone https://github.com/xmrig/xmrig.git && \
+RUN git clone --branch ${XMRIG_GIT_TAG} --depth 1 https://github.com/xmrig/xmrig.git && \
     mkdir xmrig/build && \
     cd xmrig/build && \
     cmake .. && \
@@ -20,18 +22,21 @@ RUN git clone https://github.com/xmrig/xmrig.git && \
 
 # ---
 
-FROM ubuntu:20.04
+FROM alpine:3.20.2
 
-COPY --from=0 /usr/src/xmrig/build/xmrig /
+LABEL owner="Jorge Castro"
+LABEL maintainer="nikey_es@yahoo.es"
 
-RUN set -e && \
-    apt-get update -q -y --no-install-recommends && \
-    DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
-    libssl1.1 \
-    libcrypto++6 \
-    libhwloc15 \
-      && \
-    apt-get clean
+RUN apk add --no-cache \
+    libuv \
+    libressl \
+    hwloc-dev
 
-WORKDIR /
-ENTRYPOINT ["/xmrig"]
+RUN addgroup -S xmrig -g 1000 && \
+    adduser -S -u 1000 -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
+USER xmrig
+
+COPY --from=builder --chown=xmrig:xmrig /usr/src/xmrig/build/xmrig /usr/local/bin/xmrig
+
+WORKDIR /usr/local/bin/
+ENTRYPOINT ["xmrig"]
