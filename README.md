@@ -1,4 +1,10 @@
 # Monero miner docker with pool or with p2pool protocol
+
+[![Build Status][github-actions-img]][github-actions]
+[![GPL-3 licensed][license-img]][license]
+[![GitHub release][release-img]][release]
+![GitHub downloads][downloads-img]
+
 - Based on:
      - https://github.com/giansalex/monero-miner-docker
      - https://github.com/SChernykh/p2pool
