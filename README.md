@@ -1,7 +1,7 @@
 # Monero miner docker with pool or with p2pool protocol
 
-[![Lint Dockerfile](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml/badge.svg)](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![CI](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml/badge.svg)](https://github.com/nikeyes/monero-miner-docker/actions/workflows/check_docker.yml)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 - Based on:
      - https://github.com/giansalex/monero-miner-docker
@@ -97,5 +97,6 @@ docker volume rm monero
 - Ubuntu reference: [https://xmrig.com/docs/miner/build/ubuntu](https://xmrig.com/docs/miner/build/ubuntu)
 - Doc: [https://xmrig.com/docs/miner](https://xmrig.com/docs/miner)
 
-### Pending
-- Add test when run p2pool to detect error: `Params Invalid wallet address. Try "p2pool --help".` to avoid incorrect or empty waller address
+# For developer
+- [hadolint](https://github.com/hadolint/hadolint) as Dockerfile linter
+- [yaml lint](https://github.com/adrienverge/yamllint) as YAML linter

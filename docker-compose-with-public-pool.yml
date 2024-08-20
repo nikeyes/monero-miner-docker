@@ -3,7 +3,7 @@ version: '3.8'
 services:
   monero-miner:
     image: monero-miner
-    build: 
+    build:
       context: xmrig/.
       args:
         - XMRIG_GIT_TAG=v6.22.0
