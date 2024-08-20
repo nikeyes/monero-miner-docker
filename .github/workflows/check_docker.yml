@@ -3,7 +3,7 @@ name: Lint Dockerfile
 on: push
 
 jobs:
-  linter:
+  dockerfile-linter:
     runs-on: ubuntu-latest
     steps:
 
