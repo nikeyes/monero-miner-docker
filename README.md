@@ -92,3 +92,6 @@ docker volume rm monero
 - Alpine reference: [https://xmrig.com/docs/miner/build/alpine](https://xmrig.com/docs/miner/build/alpine)
 - Ubuntu reference: [https://xmrig.com/docs/miner/build/ubuntu](https://xmrig.com/docs/miner/build/ubuntu)
 - Doc: [https://xmrig.com/docs/miner](https://xmrig.com/docs/miner)
+
+### Pending
+- Add test when run p2pool to detect error: `Params Invalid wallet address. Try "p2pool --help".` to avoid incorrect or empty waller address

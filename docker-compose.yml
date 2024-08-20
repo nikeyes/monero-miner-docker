@@ -17,8 +17,6 @@ services:
       context: p2pool/.
       args:
         - P2POOL_GIT_TAG=v4.1
-    env_file:
-      - .env
     container_name: p2pool-p2pool
     networks:
       - p2pool
@@ -34,7 +32,7 @@ services:
     restart: unless-stopped
     command: >-
       --host monero
-      --wallet ${WALLET}
+      --wallet 49NzKLonRimMhGnEiLNeZMTRFhNaVpPHoDrBUKiUsiDDXqXa6rbx7kagHQUNvEF8CfGjMD8KmKjBb7L6ZaEcRV9p5EZb32f
       --loglevel 3
       --local-api
       --data-api /home/p2pool/.p2pool
