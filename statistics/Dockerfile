@@ -13,6 +13,8 @@ USER appuser
 
 WORKDIR /app
 
+WORKDIR ./
+
 COPY --chown=appuser:appuser app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
