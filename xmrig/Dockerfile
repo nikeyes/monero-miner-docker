@@ -14,12 +14,14 @@ RUN apk add --no-cache \
     openssl-dev \ 
     hwloc-dev
     
+WORKDIR /src
 
-RUN git clone --branch ${XMRIG_GIT_TAG} --depth 1 https://github.com/xmrig/xmrig.git && \
-    mkdir xmrig/build && \
-    cd xmrig/build && \
-    cmake .. && \
-    make -j$(nproc)
+RUN git clone --branch ${XMRIG_GIT_TAG} --depth 1 https://github.com/xmrig/xmrig.git
+    
+WORKDIR /src/xmrig/build
+
+RUN cmake .. && \
+    make "-j$(nproc)"
 
 FROM alpine:3.20.2
 LABEL owner="Jorge Castro"

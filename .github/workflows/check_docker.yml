@@ -12,7 +12,8 @@ jobs:
       - name: Lint Dockerfile
         uses: hadolint/hadolint-action@master
         with:
+          config: ".hadolint.yaml"
           dockerfile: "Dockerfile"
           recursive: true
           verbose: true
-          failure-threshold: "error"
+          failure-threshold: "warning"
