@@ -17,6 +17,8 @@ RUN set -e && \
         libtool \
         pkg-config \
         gperf \
+        && \
+        apt-get clean && \
         rm -rf /var/lib/apt
 
 
