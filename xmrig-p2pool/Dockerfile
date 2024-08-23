@@ -33,8 +33,8 @@ RUN apk add --no-cache \
     libressl \
     hwloc-dev
 
-RUN addgroup -S xmrig -g 1000 && \
-    adduser -S -u 1000 -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
+RUN addgroup -S xmrig && \
+    adduser -S -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
 USER xmrig
 
 COPY --from=builder --chown=xmrig:xmrig /usr/src/xmrig/build/xmrig /usr/local/bin/xmrig
