@@ -41,8 +41,8 @@ RUN apt-get update -q -y --no-install-recommends && \
     rm -rf /var/lib/apt
 
 
-RUN groupadd -r monero -g 1000 && \
-    adduser --uid 1000 --gid 1000 --system --disabled-password monero && \
+RUN groupadd -r monero && \
+    adduser --system --disabled-password --ingroup monero monero && \
 	mkdir -p /home/monero/.bitmonero && \
 	chown -R monero:monero /home/monero/.bitmonero
 
