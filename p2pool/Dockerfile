@@ -34,7 +34,8 @@ COPY --from=builder /usr/src/p2pool/build/p2pool /
 RUN apk add --no-cache \
     libcurl \
     libuv \ 
-    libzmq
+    libzmq \
+    curl
 
 RUN addgroup -S p2pool -g 1000 && \
     adduser -S -u 1000 -G p2pool -s /sbin/nologin -g "p2pool user" p2pool 
@@ -46,6 +47,10 @@ USER p2pool
 EXPOSE 3333 37889 37888
 
 VOLUME /home/p2pool/.p2pool
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+    CMD curl -X GET http://localhost:3333 > /dev/null 2>&1 && \
+        nc -zv localhost 37888 > /dev/null 2>&1 || exit 1
 
 WORKDIR /home/p2pool/.p2pool
 ENTRYPOINT ["/p2pool"]

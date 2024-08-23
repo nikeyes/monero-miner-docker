@@ -40,5 +40,8 @@ USER xmrig
 
 COPY --from=builder --chown=xmrig:xmrig /usr/src/xmrig/build/xmrig /usr/local/bin/xmrig
 
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+    CMD pgrep xmrig > /dev/null && exit 0 || exit 1
+
 WORKDIR /usr/local/bin/
 ENTRYPOINT ["xmrig"]

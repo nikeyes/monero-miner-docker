@@ -39,6 +39,7 @@ RUN apt-get update -q -y --no-install-recommends && \
     DEBIAN_FRONTEND="noninteractive" apt-get install -q -y --no-install-recommends \
       ca-certificates \
       netcat \
+      curl \
     && \
     apt-get clean && \
     rm -rf /var/lib/apt
@@ -55,11 +56,11 @@ COPY --from=builder /src/monero/build/*/release/bin /usr/local/bin/
 
 WORKDIR /home/monero
 
-HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
-    CMD curl -X POST http://localhost:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' -H 'Content-Type: application/json' || exit 1
-
 EXPOSE 18080 18081 18083
 
 VOLUME /home/monero/.bitmonero
+
+HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
+    CMD curl -X POST http://localhost:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' -H 'Content-Type: application/json' || exit 1
 
 ENTRYPOINT ["/usr/local/bin/monerod"]

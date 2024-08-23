@@ -23,10 +23,10 @@ COPY --chown=appuser:appuser app .
 # Redundat, but it's a good practice to avoid permission issues if the files changed at the copy moment
 RUN chown -R appuser:appuser /app
 
+EXPOSE 3380
+
 HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
     CMD curl -f http://localhost:3380/ || exit 1
-
-EXPOSE 3380
 
 ENTRYPOINT ["python"]
 CMD ["/app/p2pool_statistics.py"]
