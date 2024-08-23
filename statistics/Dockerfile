@@ -2,13 +2,15 @@ FROM python:3.12.5-alpine3.20
 
 LABEL owner="Jorge Castro" maintainer="nikey_es@yahoo.es"
 
+RUN apk add --no-cache curl
+
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1 \
     PIP_NO_CACHE_DIR=on \
     PIP_DISABLE_PIP_VERSION_CHECK=on
 
-RUN addgroup -S appuser -g 1000 && \
-    adduser -S -u 1000 -G appuser -s /sbin/nologin -g "appuser user" appuser  
+RUN addgroup -S appuser && \
+    adduser -S -G appuser -s /sbin/nologin -g "appuser user" appuser  
 USER appuser
 
 WORKDIR /app

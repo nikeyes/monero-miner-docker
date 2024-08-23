@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   monero-miner:
     image: monero-miner
