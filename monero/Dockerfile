@@ -16,7 +16,8 @@ RUN set -e && \
         git \
         libtool \
         pkg-config \
-        gperf
+        gperf \
+        rm -rf /var/lib/apt
 
 
 WORKDIR /src
