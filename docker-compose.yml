@@ -66,7 +66,7 @@ services:
       - monero:/home/monero/.bitmonero:rw
       - /dev/null:/home/monero/.bitmonero/bitmonero.log:rw
       - /dev/hugepages:/dev/hugepages:rw
-    restart: unless-stopped
+    restart: on-failure:5
     command: >-
       --zmq-pub tcp://0.0.0.0:18083
       --disable-dns-checkpoints
