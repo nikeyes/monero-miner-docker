@@ -32,8 +32,8 @@ RUN apk update && apk add --no-cache \
     libressl \
     hwloc-dev
 
-RUN addgroup -S xmrig && \
-    adduser -S -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
+RUN addgroup -S xmrig -g 1000 && \
+    adduser -S -u 1000 -G xmrig -s /sbin/nologin -g "xmrig user" xmrig 
 USER xmrig
 
 WORKDIR /xmr
