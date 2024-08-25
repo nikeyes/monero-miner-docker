@@ -32,16 +32,19 @@ RUN apk update && apk add --no-cache \
     libressl \
     hwloc-dev
 
-RUN addgroup -S xmrig && \
-    adduser -S -G xmrig -s /sbin/nologin -g "xmrig user" xmrig  
+RUN addgroup -S xmrig -g 1000 && \
+    adduser -S -u 1000 -G xmrig -s /sbin/nologin -g "xmrig user" xmrig 
 USER xmrig
 
 WORKDIR /xmr
-COPY --from=builder --chown=xmrig:xmrig /miner/xmrig/build/xmrig /xmr
+COPY --from=builder --chown=xmrig:xmrig /src/xmrig/build/xmrig /xmr
 
 ENV WALLET=DEFAULT_WALLET
 ENV POOL=DEFAULT_POOL
 ENV PASS=DEFAULT_PASS
 ENV DONATE_LEVEL=DEFAULT_DONATE_LEVEL
+
+HEALTHCHECK --interval=60s --timeout=5s --retries=3 \
+    CMD pgrep xmrig > /dev/null && exit 0 || exit 1
 
 CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=$DONATE_LEVEL --user=$WALLET --pass=$PASS -k --algo=rx/0 --coin=monero"]

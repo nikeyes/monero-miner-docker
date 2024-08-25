@@ -2,7 +2,7 @@ services:
   monero-miner:
     image: monero-miner
     build:
-      context: xmrig/.
+      context: xmrig-public-pool/.
       args:
         - XMRIG_GIT_TAG=v6.22.0
     environment:

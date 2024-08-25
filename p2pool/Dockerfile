@@ -34,10 +34,11 @@ COPY --from=builder /usr/src/p2pool/build/p2pool /
 RUN apk add --no-cache \
     libcurl \
     libuv \ 
-    libzmq
+    libzmq \
+    curl
 
-RUN addgroup -S p2pool && \
-    adduser -S -G p2pool -s /sbin/nologin -g "p2pool user" p2pool 
+RUN addgroup -S p2pool -g 1000 && \
+    adduser -S -u 1000 -G p2pool -s /sbin/nologin -g "p2pool user" p2pool 
     
 RUN mkdir -p /home/p2pool/.p2pool && \
     chown p2pool.p2pool /home/p2pool /home/p2pool/.p2pool
