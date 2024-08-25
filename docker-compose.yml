@@ -18,7 +18,6 @@ services:
     container_name: p2pool-p2pool
     networks:
       - p2pool
-    privileged: true
     ports:
       - 37888:37888/tcp
       - 3333:3333/tcp
@@ -28,6 +27,12 @@ services:
       - /dev/hugepages:/dev/hugepages:rw
     depends_on:
       - monero
+    privileged: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
     restart: unless-stopped
     healthcheck:
       test: >-
@@ -58,6 +63,12 @@ services:
       - p2pool:/data:ro
     depends_on:
       - p2pool
+    privileged: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
     restart: unless-stopped
     healthcheck:
       test: curl -f http://localhost:3380/ || exit 1
@@ -82,6 +93,12 @@ services:
       - /dev/null:/home/monero/.bitmonero/bitmonero.log:rw
       - /dev/hugepages:/dev/hugepages:rw
     restart: on-failure:5
+    privileged: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
     healthcheck:
       test: >-
         curl -X POST http://localhost:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' -H 'Content-Type: application/json' &&
@@ -118,13 +135,18 @@ services:
     container_name: p2pool-xmrig
     networks:
       - p2pool
-    privileged: true
     volumes:
       - /dev:/dev:ro
       - /lib/modules:/lib/modules:ro
       - /dev/hugepages:/dev/hugepages:rw
     depends_on:
       - p2pool
+    privileged: false
+    read_only: true
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges
     restart: unless-stopped
     healthcheck:
       test: pgrep xmrig > /dev/null && exit 0 || exit 1
