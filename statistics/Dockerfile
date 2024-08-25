@@ -16,7 +16,7 @@ USER appuser
 WORKDIR /app
 
 COPY --chown=appuser:appuser app/requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install --require-hashes --only-binary :all: --no-cache-dir -r requirements.txt
 
 COPY --chown=appuser:appuser app .
 
