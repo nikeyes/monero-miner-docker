@@ -17,12 +17,6 @@ Here's the comparison table of the different ways of mining. While pool mining i
 |Solo|Rare|0%|0.6 XMR or more|No|As stable as your Monero node|100% under your control|Monero node + optional miner
 |**P2Pool**|Regular|0%|~0.00027 XMR|No|Very stable: node failover and multiple Monero nodes are supported|100% under your control|Monero node(s) + P2Pool node(s) + optional miner(s)
 
-### Pool status and monitoring pages 
-- [https://p2pool.io/](https://p2pool.io/)
-- [https://p2pool.io/mini/](https://p2pool.io/mini/)
-- [https://p2pool.observer/](https://p2pool.observer/)
-- [https://mini.p2pool.observer/](https://mini.p2pool.observer/)
-
 ## Monero mining with public pools
 
 ### How to run and stop with public pool
@@ -41,9 +35,15 @@ docker compose -f docker-compose-with-public-pool.yml  down
 ## Monero with p2pool protocol
 - **IMPORTANT! You need between 70-90GB of free space and 7-10 hours to synchronise the entire monero blockchain.**
 
+### p2pool status and monitoring pages 
+- [https://p2pool.io/](https://p2pool.io/)
+- [https://p2pool.io/mini/](https://p2pool.io/mini/)
+- [https://p2pool.observer/](https://p2pool.observer/)
+- [https://mini.p2pool.observer/](https://mini.p2pool.observer/)
+
 ### How to run p2pool
 ```bash
-docker compose up --build
+docker compose up --build --abort-on-container-exit  
 ```
 
 ### How to stop p2pool
@@ -51,7 +51,7 @@ docker compose up --build
 docker compose down
 ```
 
-### How to see p2pool statistics
+### How to see local p2pool statistics
 - [http://localhost:3380/](http://localhost:3380/)
 
 ### Update containers
@@ -103,6 +103,5 @@ docker volume rm monero
 
 ## Healthchecks
 - You will see that I have healthchecks in some Dockerfile and in the docker-compose.yml
-- You need to decide what is the best option for you. 
 - For example if you can run your containers individually a good option is to have the healthcheck in the Dockerfile. Like [xmrig with public pool](/xmrig/Dockerfile)
 - If your containers have dependencies and only run with docker-compose I prefere to have the healthchekcs in docker-compse-yml. [docker-compose.yml](docker-compose.yml)
