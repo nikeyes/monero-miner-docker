@@ -1,4 +1,4 @@
-FROM ubuntu:20.04 as builder
+FROM ubuntu:20.04 AS builder
 
 ARG MONERO_GIT_TAG="PUT_A_TAG_HERE"
 
@@ -59,8 +59,5 @@ WORKDIR /home/monero
 EXPOSE 18080 18081 18083
 
 VOLUME /home/monero/.bitmonero
-
-HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
-    CMD curl -X POST http://localhost:18081/json_rpc -d '{"jsonrpc":"2.0","id":"0","method":"get_info"}' -H 'Content-Type: application/json' || exit 1
 
 ENTRYPOINT ["/usr/local/bin/monerod"]

@@ -44,4 +44,7 @@ ENV POOL=DEFAULT_POOL
 ENV PASS=DEFAULT_PASS
 ENV DONATE_LEVEL=DEFAULT_DONATE_LEVEL
 
+HEALTHCHECK --interval=60s --timeout=5s --retries=3 \
+    CMD pgrep xmrig > /dev/null && exit 0 || exit 1
+
 CMD ["sh", "-c", "./xmrig --url=$POOL --donate-level=$DONATE_LEVEL --user=$WALLET --pass=$PASS -k --algo=rx/0 --coin=monero"]

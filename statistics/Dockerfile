@@ -25,8 +25,5 @@ RUN chown -R appuser:appuser /app
 
 EXPOSE 3380
 
-HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
-    CMD curl -f http://localhost:3380/ || exit 1
-
 ENTRYPOINT ["python"]
 CMD ["/app/p2pool_statistics.py"]

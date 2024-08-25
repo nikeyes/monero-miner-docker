@@ -48,9 +48,5 @@ EXPOSE 3333 37889 37888
 
 VOLUME /home/p2pool/.p2pool
 
-HEALTHCHECK --interval=10s --timeout=5s --retries=3 \
-    CMD curl -X GET http://localhost:3333 > /dev/null 2>&1 && \
-        nc -zv localhost 37888 > /dev/null 2>&1 || exit 1
-
 WORKDIR /home/p2pool/.p2pool
 ENTRYPOINT ["/p2pool"]

@@ -100,3 +100,9 @@ docker volume rm monero
 # For developer
 - [hadolint](https://github.com/hadolint/hadolint) as Dockerfile linter
 - [yaml lint](https://github.com/adrienverge/yamllint) as YAML linter
+
+## Healthchecks
+- You will see that I have healthchecks in some Dockerfile and in the docker-compose.yml
+- You need to decide what is the best option for you. 
+- For example if you can run your containers individually a good option is to have the healthcheck in the Dockerfile. Like [xmrig with public pool](/xmrig/Dockerfile)
+- If your containers have dependencies and only run with docker-compose I prefere to have the healthchekcs in docker-compse-yml. [docker-compose.yml](docker-compose.yml)
