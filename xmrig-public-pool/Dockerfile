@@ -37,7 +37,7 @@ RUN addgroup -S xmrig -g 1000 && \
 USER xmrig
 
 WORKDIR /xmr
-COPY --from=builder --chown=xmrig:xmrig /miner/xmrig/build/xmrig /xmr
+COPY --from=builder --chown=xmrig:xmrig /src/xmrig/build/xmrig /xmr
 
 ENV WALLET=DEFAULT_WALLET
 ENV POOL=DEFAULT_POOL
